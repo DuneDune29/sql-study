@@ -1,0 +1,826 @@
+select * from dept;
+
+DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+        20 RESEARCH                     DALLAS
+        30 SALES                        CHICAGO
+        40 OPERATIONS                   BOSTON
+        
+select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7839 KING                 PRESIDENT                     81/11/17
+      5000                    10
+
+      7566 JONES                MANAGER                  7839 81/04/02
+      2975                    20
+
+      7698 BLAKE                MANAGER                  7839 81/05/01
+      2850                    30
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7782 CLARK                MANAGER                  7839 81/06/09
+      2450                    10
+
+      7788 SCOTT                ANALYST                  7566 87/04/19
+      3000                    20
+
+      7902 FORD                 ANALYST                  7566 81/12/03
+      3000                    20
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7499 ALLEN                SALESMAN                 7698 81/02/20
+      1600        300         30
+
+      7521 WARD                 SALESMAN                 7698 81/02/22
+      1250        500         30
+
+      7654 MARTIN               SALESMAN                 7698 81/09/28
+      1250       1400         30
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7844 TURNER               SALESMAN                 7698 81/09/08
+      1500                    30
+
+      7900 JAMES                CLERK                    7698 81/12/03
+       950                    30
+
+      7934 MILLER               CLERK                    7782 82/01/23
+      1300                    10
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7369 SMITH                CLERK                    7902 80/12/17
+       800                    20
+
+      7876 ADAMS                CLERK                    7788 87/05/23
+      1100                    20
+      
+ select deptno, dname from dept;
+
+    DEPTNO DNAME
+---------- ----------------------------
+        10 ACCOUNTING
+        20 RESEARCH
+        30 SALES
+        40 OPERATIONS
+        
+        
+select deptno as No, dname as Name from dept;
+
+NO NAME
+---------- ----------------------------
+        10 ACCOUNTING
+        20 RESEARCH
+        30 SALES
+        40 OPERATIONS
+        10 ACCOUNTING
+        20 RESEARCH
+        30 SALES
+        40 OPERATIONS
+        
+    
+select deptno as "No", dname as Name from dept;
+
+No NAME
+---------- ----------------------------
+        10 ACCOUNTING
+        20 RESEARCH
+        30 SALES
+        40 OPERATIONS
+        10 ACCOUNTING
+        20 RESEARCH
+        30 SALES
+        40 OPERATIONS
+        
+     
+select distinct job from emp;
+
+JOB
+------------------
+SALESMAN
+CLERK
+PRESIDENT
+MANAGER
+ANALYST
+      
+
+select ename, sal * 12 from emp;
+
+ENAME                    SAL*12
+-------------------- ----------
+KING                      60000
+JONES                     35700
+BLAKE                     34200
+CLARK                     29400
+SCOTT                     36000
+FORD                      36000
+ALLEN                     19200
+WARD                      15000
+MARTIN                    15000
+TURNER                    18000
+JAMES                     11400
+
+ENAME                    SAL*12
+-------------------- ----------
+MILLER                    15600
+SMITH                      9600
+ADAMS                     13200      
+
+
+select ename, sal * 12 "year salary" from emp;
+
+ENAME                year salary
+-------------------- -----------
+KING                       60000
+JONES                      35700
+BLAKE                      34200
+CLARK                      29400
+SCOTT                      36000
+FORD                       36000
+ALLEN                      19200
+WARD                       15000
+MARTIN                     15000
+TURNER                     18000
+JAMES                      11400
+
+ENAME                year salary
+-------------------- -----------
+MILLER                     15600
+SMITH                       9600
+ADAMS                      13200
+
+
+select ename, ' is a ', job from emp;
+
+ENAME                'ISA'        JOB
+-------------------- ------------ ------------------
+KING                  is a        PRESIDENT
+JONES                 is a        MANAGER
+BLAKE                 is a        MANAGER
+CLARK                 is a        MANAGER
+SCOTT                 is a        ANALYST
+FORD                  is a        ANALYST
+ALLEN                 is a        SALESMAN
+WARD                  is a        SALESMAN
+MARTIN                is a        SALESMAN
+TURNER                is a        SALESMAN
+JAMES                 is a        CLERK
+
+ENAME                'ISA'        JOB
+-------------------- ------------ ------------------
+MILLER                is a        CLERK
+SMITH                 is a        CLERK
+ADAMS                 is a        CLERK
+
+
+
+select ename, ' afa ', job from emp;
+
+ENAME                'AFA'      JOB
+-------------------- ---------- ------------------
+KING                  afa       PRESIDENT
+JONES                 afa       MANAGER
+BLAKE                 afa       MANAGER
+CLARK                 afa       MANAGER
+SCOTT                 afa       ANALYST
+FORD                  afa       ANALYST
+ALLEN                 afa       SALESMAN
+WARD                  afa       SALESMAN
+MARTIN                afa       SALESMAN
+TURNER                afa       SALESMAN
+JAMES                 afa       CLERK
+
+ENAME                'AFA'      JOB
+-------------------- ---------- ------------------
+MILLER                afa       CLERK
+SMITH                 afa       CLERK
+ADAMS                 afa       CLERK
+
+
+select ename || 'a ', job from emp;
+
+ENAME||'A'               JOB
+------------------------ ------------------
+KINGa                    PRESIDENT
+JONESa                   MANAGER
+BLAKEa                   MANAGER
+CLARKa                   MANAGER
+SCOTTa                   ANALYST
+FORDa                    ANALYST
+ALLENa                   SALESMAN
+WARDa                    SALESMAN
+MARTINa                  SALESMAN
+TURNERa                  SALESMAN
+JAMESa                   CLERK
+
+ENAME||'A'               JOB
+------------------------ ------------------
+MILLERa                  CLERK
+SMITHa                   CLERK
+ADAMSa                   CLERK
+
+
+select ename || ' is a ' || job from emp;
+
+ENAME||'ISA'||JOB
+--------------------------------------------------
+KING is a PRESIDENT
+JONES is a MANAGER
+BLAKE is a MANAGER
+CLARK is a MANAGER
+SCOTT is a ANALYST
+FORD is a ANALYST
+ALLEN is a SALESMAN
+WARD is a SALESMAN
+MARTIN is a SALESMAN
+TURNER is a SALESMAN
+JAMES is a CLERK
+
+ENAME||'ISA'||JOB
+--------------------------------------------------
+MILLER is a CLERK
+SMITH is a CLERK
+ADAMS is a CLERK
+
+
+select * from emp where deptno = 10;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7839 KING                 PRESIDENT                     81/11/17
+      5000                    10
+
+      7782 CLARK                MANAGER                  7839 81/06/09
+      2450                    10
+
+      7934 MILLER               CLERK                    7782 82/01/23
+      1300                    10
+      
+      
+      
+select empno, ename, sal from emp where sal >= 2000;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7839 KING                       5000
+      7566 JONES                      2975
+      7698 BLAKE                      2850
+      7782 CLARK                      2450
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+
+
+
+select empno, ename, job, deptno from emp
+  2  where deptno = 10 and job = 'CLERK' ;
+
+     EMPNO ENAME                JOB                    DEPTNO
+---------- -------------------- ------------------ ----------
+      7934 MILLER               CLERK                      10
+      
+      
+      
+select ename, hiredate from emp
+  2  where hiredate >= '1982/01/01' or job = 'MANAGER';
+
+ENAME                HIREDATE
+-------------------- --------
+JONES                81/04/02
+BLAKE                81/05/01
+CLARK                81/06/09
+SCOTT                87/04/19
+MILLER               82/01/23
+ADAMS                87/05/23
+
+
+
+select empno, ename, comm from emp
+  2  where comm = 300 or comm = 500 or comm = 1400;
+
+     EMPNO ENAME                      COMM
+---------- -------------------- ----------
+      7499 ALLEN                       300
+      7521 WARD                        500
+      7654 MARTIN                     1400
+      
+      
+      
+select empno, ename, comm from emp
+  2  where comm IN (300, 500, 1400);
+
+     EMPNO ENAME                      COMM
+---------- -------------------- ----------
+      7499 ALLEN                       300
+      7521 WARD                        500
+      7654 MARTIN                     1400
+      
+      
+      
+ select empno, ename, sal from emp
+  2  where sal >= 500 and sal <= 4000;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7566 JONES                      2975
+      7698 BLAKE                      2850
+      7782 CLARK                      2450
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+      7499 ALLEN                      1600
+      7521 WARD                       1250
+      7654 MARTIN                     1250
+      7844 TURNER                     1500
+      7900 JAMES                       950
+      7934 MILLER                     1300
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7369 SMITH                       800
+      7876 ADAMS                      1100
+      
+      
+      
+select empno, ename, sal from emp
+  2  where sal between 500 and 4000;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7566 JONES                      2975
+      7698 BLAKE                      2850
+      7782 CLARK                      2450
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+      7499 ALLEN                      1600
+      7521 WARD                       1250
+      7654 MARTIN                     1250
+      7844 TURNER                     1500
+      7900 JAMES                       950
+      7934 MILLER                     1300
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7369 SMITH                       800
+      7876 ADAMS                      1100
+      
+      
+      
+select ename, hiredate from emp
+  2  where hiredate >= '1982/01/01' and hiredate <= '1982/12/31' ;
+
+ENAME                HIREDATE
+-------------------- --------
+MILLER               82/01/23
+
+
+
+select ename, hiredate from emp
+  2  where hiredate between '1982/01/01' and '1982/12/31' ;
+
+ENAME                HIREDATE
+-------------------- --------
+MILLER               82/01/23
+
+
+
+select empno, ename, deptno from emp
+  2  where not deptno = 10;
+
+     EMPNO ENAME                    DEPTNO
+---------- -------------------- ----------
+      7566 JONES                        20
+      7698 BLAKE                        30
+      7788 SCOTT                        20
+      7902 FORD                         20
+      7499 ALLEN                        30
+      7521 WARD                         30
+      7654 MARTIN                       30
+      7844 TURNER                       30
+      7900 JAMES                        30
+      7369 SMITH                        20
+      7876 ADAMS                        20
+      
+      
+   
+select empno, ename, comm from emp
+  2  WHERE comm NOT IN (300, 500, 1400);
+
+no rows selected -- NULL 해당값 없음
+
+
+select empno, ename, SAL from emp
+  2  where sal not between 500 and 4000;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7839 KING                       5000
+      
+      
+      
+ select empno, ename from emp
+  2  where ename like 'J%';
+
+     EMPNO ENAME
+---------- --------------------
+      7566 JONES
+      7900 JAMES
+      
+      
+ select empno, ename from emp
+  2  where ename like '%N';
+
+     EMPNO ENAME
+---------- --------------------
+      7499 ALLEN
+      7654 MARTIN
+      
+      
+select empno, ename from emp
+  2  where ename like '%A%';
+
+     EMPNO ENAME
+---------- --------------------
+      7698 BLAKE
+      7782 CLARK
+      7499 ALLEN
+      7521 WARD
+      7654 MARTIN
+      7900 JAMES
+      7876 ADAMS
+      
+      
+select empno, ename from emp
+  2  where ename like '_A%' ;
+
+     EMPNO ENAME
+---------- --------------------
+      7521 WARD
+      7654 MARTIN
+      7900 JAMES
+      
+      
+      
+select empno, ename from emp
+  2  where ename like '___D' ;
+
+     EMPNO ENAME
+---------- --------------------
+      7902 FORD
+      7521 WARD
+      
+      
+      
+select empno, ename from emp
+  2  where ename like '_L_R%' ;
+
+     EMPNO ENAME
+---------- --------------------
+      7782 CLARK
+      
+      
+      
+      
+select empno, ename from emp
+  2  where ename not like '%A%' ;
+
+     EMPNO ENAME
+---------- --------------------
+      7839 KING
+      7566 JONES
+      7788 SCOTT
+      7902 FORD
+      7844 TURNER
+      7934 MILLER
+      7369 SMITH
+      
+      
+      
+      
+emp 테이블에서 업무가 salesman이거나 manager이고 급여가 2000인 이상인 사원의 이름, 급여, 업무 정보 조회
+
+SQL> select job, sal, ename from emp
+  2  where sal>=2000 and job = 'SALESMAN' or job = 'MANAGER';
+
+JOB                       SAL ENAME
+------------------ ---------- --------------------
+MANAGER                  2975 JONES
+MANAGER                  2850 BLAKE
+MANAGER                  2450 CLARK
+
+
+
+
+select empno, ename, sal from emp
+  2  order by sal;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7369 SMITH                       800
+      7900 JAMES                       950
+      7876 ADAMS                      1100
+      7654 MARTIN                     1250
+      7521 WARD                       1250
+      7934 MILLER                     1300
+      7844 TURNER                     1500
+      7499 ALLEN                      1600
+      7782 CLARK                      2450
+      7698 BLAKE                      2850
+      7566 JONES                      2975
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+      7839 KING                       5000
+      
+      
+      
+select empno, ename, sal from emp
+  2  order by sal desc;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7839 KING                       5000
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+      7566 JONES                      2975
+      7698 BLAKE                      2850
+      7782 CLARK                      2450
+      7499 ALLEN                      1600
+      7844 TURNER                     1500
+      7934 MILLER                     1300
+      7521 WARD                       1250
+      7654 MARTIN                     1250
+      7876 ADAMS                      1100
+      7900 JAMES                       950
+      7369 SMITH                       800
+      
+      
+      
+      
+select empno, ename, sal from emp
+  2  order by sal, ename desc;
+
+     EMPNO ENAME                       SAL
+---------- -------------------- ----------
+      7369 SMITH                       800
+      7900 JAMES                       950
+      7876 ADAMS                      1100
+      7521 WARD                       1250
+      7654 MARTIN                     1250
+      7934 MILLER                     1300
+      7844 TURNER                     1500
+      7499 ALLEN                      1600
+      7782 CLARK                      2450
+      7698 BLAKE                      2850
+      7566 JONES                      2975
+      7788 SCOTT                      3000
+      7902 FORD                       3000
+      7839 KING                       5000
+      
+      
+      
+      
+select empno, ename, sal, hiredate from emp
+  2  order by sal desc, hiredate;
+
+     EMPNO ENAME                       SAL HIREDATE
+---------- -------------------- ---------- --------
+      7839 KING                       5000 81/11/17
+      7902 FORD                       3000 81/12/03
+      7788 SCOTT                      3000 87/04/19
+      7566 JONES                      2975 81/04/02
+      7698 BLAKE                      2850 81/05/01
+      7782 CLARK                      2450 81/06/09
+      7499 ALLEN                      1600 81/02/20
+      7844 TURNER                     1500 81/09/08
+      7934 MILLER                     1300 82/01/23
+      7521 WARD                       1250 81/02/22
+      7654 MARTIN                     1250 81/09/28
+      7876 ADAMS                      1100 87/05/23
+      7900 JAMES                       950 81/12/03
+      7369 SMITH                       800 80/12/17
+      
+      
+      
+      
+select sum(sal) from emp;
+
+  SUM(SAL)
+----------
+     29025
+     
+    
+select avg(sal) from emp;
+
+  AVG(SAL)
+----------
+2073.21429
+
+
+select max(sal), min(sal) from emp;
+
+  MAX(SAL)   MIN(SAL)
+---------- ----------
+      5000        800
+
+
+select count(comm) from emp;
+
+COUNT(COMM)
+-----------
+          3
+          
+          
+select count(*) from emp;
+
+  COUNT(*)
+----------
+        14
+        
+        
+ select sum(comm) / count(*) from emp;
+
+SUM(COMM)/COUNT(*)
+------------------
+        157.142857
+        
+        
+        
+select sum(comm) / count(comm) from emp;
+
+SUM(COMM)/COUNT(COMM)
+---------------------
+           733.333333
+           
+           
+           
+ select avg(comm) from emp;
+
+ AVG(COMM)
+----------
+733.333333
+
+SQL> select count(distinct job) from emp;
+
+COUNT(DISTINCTJOB)
+------------------
+                 5
+                 
+                 
+                 
+select deptno from emp
+  2  group by deptno;
+
+    DEPTNO
+----------
+        30
+        20
+        10
+        
+        
+        
+select deptno, sum(sal), avg(sal) from emp
+  2  group by deptno;
+
+    DEPTNO   SUM(SAL)   AVG(SAL)
+---------- ---------- ----------
+        30       9400 1566.66667
+        20      10875       2175
+        10       8750 2916.66667
+        
+        
+        
+select deptno, max(sal), min(sal) from emp
+  2  group by deptno;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)
+---------- ---------- ----------
+        30       2850        950
+        20       3000        800
+        10       5000       1300
+        
+        
+ select comm, count(comm) from emp
+  2  group by comm;
+
+      COMM COUNT(COMM)
+---------- -----------
+                     0
+      1400           1
+       500           1
+       300           1
+       
+       
+select comm, count(*) from emp
+  2  group by comm;
+
+      COMM   COUNT(*)
+---------- ----------
+                   11
+      1400          1
+       500          1
+       300          1
+       
+       
+select deptno, avg(sal) from emp
+  2  group by deptno
+  3  having avg(sal) >= 2000;
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        20       2175
+        10 2916.66667
+
+
+
+select deptno, avg(sal) from emp
+  2  group by deptno;
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        30 1566.66667
+        20       2175
+        10 2916.66667
+
+
+
+select deptno, max(sal), min(sal)
+  2  from emp
+  3  group by deptno
+  4  having max(sal) > 2900;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)
+---------- ---------- ----------
+        20       3000        800
+        10       5000       1300
+
+
+
+select deptno, avg(sal) from emp
+  2  where sal >= 1000
+  3  group by deptno
+  4  having avg(sal) >= 2000;
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        20    2518.75
+        10 2916.66667
+
+
+
+select job, deptno, sum(sal), count(*) from emp
+  2  where deptno = 20
+  3  group by job, deptno;
+
+JOB                    DEPTNO   SUM(SAL)   COUNT(*)
+------------------ ---------- ---------- ----------
+MANAGER                    20       2975          1
+ANALYST                    20       6000          2
+CLERK                      20       1900          2
+
+
+
+select deptno, avg(sal), sum(sal), count(*) from emp
+  2  group by deptno
+  3  having count(*) >= 5;
+
+    DEPTNO   AVG(SAL)   SUM(SAL)   COUNT(*)
+---------- ---------- ---------- ----------
+        30 1566.66667       9400          6
+        20       2175      10875          5
+
+
+
+       
+       
+        
+        
+        
+        
+
+      
+      
+      
+      
+
+      
+      
