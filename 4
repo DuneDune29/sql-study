@@ -1,0 +1,1108 @@
+SQL> create table board(
+  2  no int primary key,
+  3  subject varchar2(30),
+  4  content varchar2(50),
+  5  w_date date
+  6  );
+
+Table created.
+
+
+
+SQL> create sequence seq_no nocache;
+
+Sequence created.
+
+
+
+SQL> insert into board
+  2  values(seq_no.nextval, 'java1', 'java', sysdate);
+
+1 row created.
+
+
+
+SQL> insert into board
+  2  values(seq_no.nextval, 'java2', '자바', sysdate);
+
+1 row created.
+
+
+
+SQL> select * from board;
+
+        NO SUBJECT
+---------- ------------------------------------------------------------
+CONTENT
+--------------------------------------------------------------------------------
+W_DATE
+--------
+         1 java1
+java
+21/04/29
+
+         2 java2
+자바
+21/04/29
+
+        NO SUBJECT
+---------- ------------------------------------------------------------
+CONTENT
+--------------------------------------------------------------------------------
+W_DATE
+--------
+
+
+
+SQL> insert into board
+  2  values(seq_no.nextval, 'java3', 자바, sysdate);
+values(seq_no.nextval, 'java3', 자바, sysdate)
+                                *
+ERROR at line 2:
+ORA-00984: column not allowed here
+
+
+
+
+SQL> insert into board
+  2  values(seq_no.nextval, 'java3', '자바', sysdate);
+
+1 row created.
+
+
+
+SQL> select * from board;
+
+        NO SUBJECT
+---------- ------------------------------------------------------------
+CONTENT
+--------------------------------------------------------------------------------
+W_DATE
+--------
+         1 java1
+java
+21/04/29
+
+         2 java2
+자바
+21/04/29
+
+        NO SUBJECT
+---------- ------------------------------------------------------------
+CONTENT
+--------------------------------------------------------------------------------
+W_DATE
+--------
+
+         3 java3
+자바
+21/04/29
+
+
+
+SQL> select seq_no.currval from dual;
+
+   CURRVAL
+----------
+         3
+
+
+
+SQL> select seq_no.nextval from dual;
+
+   NEXTVAL
+----------
+         4
+
+
+
+SQL> select sequence_name, min_value, max_value,
+  2  increment_by, cycle_flag
+  3  from user_sequences;
+
+SEQUENCE_NAME                                                 MIN_VALUE
+------------------------------------------------------------ ----------
+ MAX_VALUE INCREMENT_BY CY
+---------- ------------ --
+SEQ_NO                                                                1
+1.0000E+28            1 N
+
+
+
+SQL> create sequence dept_seq
+  2  start with 10
+  3  increment by 10
+  4  maxvalue 30
+  5  nocache;
+
+Sequence created.
+
+
+
+SQL> insert into dept01
+  2  values(dept_seq.nextval, 'ACCOUNTING', 'NEW YORK');
+
+1 row created.
+
+
+
+SQL> insert into dept01
+  2  values(dept_seq.nextval, 'RESEARCH', 'DALLAS');
+
+1 row created.
+
+
+
+SQL> insert into dept01
+  2  values(dept_seq.nextval, 'SALES', 'CHICAGO');
+
+1 row created.
+
+
+
+SQL> insert into dept01
+  2  values(dept_seq.nextval, 'OPERATIONS', 'BOSTON');
+values(dept_seq.nextval, 'OPERATIONS', 'BOSTON')
+       *
+ERROR at line 2:
+ORA-08004: sequence DEPT_SEQ.NEXTVAL exceeds MAXVALUE and cannot be
+instantiated
+
+
+
+SQL> SELECT * from dept01;
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+        20 RESEARCH                     DALLAS
+        30 SALES                        CHICAGO
+
+
+
+SQL> SELECT * from user_sequences;
+
+SEQUENCE_NAME                                                 MIN_VALUE
+------------------------------------------------------------ ----------
+ MAX_VALUE INCREMENT_BY CY OR CACHE_SIZE LAST_NUMBER
+---------- ------------ -- -- ---------- -----------
+DEPT_SEQ                                                              1
+        30           10 N  N           0          40
+
+SEQ_NO                                                                1
+1.0000E+28            1 N  N           0           5
+
+
+
+
+SQL> drop sequence dept_seq;
+
+Sequence dropped.
+
+
+
+
+SQL> SELECT * from user_sequences;
+
+SEQUENCE_NAME                                                 MIN_VALUE
+------------------------------------------------------------ ----------
+ MAX_VALUE INCREMENT_BY CY OR CACHE_SIZE LAST_NUMBER
+---------- ------------ -- -- ---------- -----------
+SEQ_NO                                                                1
+1.0000E+28            1 N  N           0           5
+
+
+
+
+SQL> drop sequence seq_no;
+
+Sequence dropped.
+
+
+
+SQL> SELECT * from user_sequences;
+
+no rows selected
+
+
+
+
+SQL> create view view_emp10
+  2  as select empno, ename, sal, deptno
+  3  from emp01
+  4  where deptno = 10;
+
+View created.
+
+
+
+SQL> desc view_emp10;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                              NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ SAL                                                NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+
+
+SQL> select * from view_emp10;
+
+     EMPNO ENAME                       SAL     DEPTNO
+---------- -------------------- ---------- ----------
+      7782 CLARK                      2450         10
+      7839 KING                       5000         10
+      7934 MILLER                     1300         10
+
+
+
+SQL> select view_name, text from user_views;
+
+VIEW_NAME
+------------------------------------------------------------
+TEXT
+--------------------------------------------------------------------------------
+VIEW_EMP10
+select empno, ename, sal, deptno
+from emp01
+where deptno = 10
+
+
+
+SQL> insert into view_emp10
+  2  values(8000, 'ANGEL', 7000, 10);
+
+1 row created.
+
+
+
+SQL> select * from view_emp10
+  2  ;
+
+     EMPNO ENAME                       SAL     DEPTNO
+---------- -------------------- ---------- ----------
+      7782 CLARK                      2450         10
+      7839 KING                       5000         10
+      7934 MILLER                     1300         10
+      8000 ANGEL                      7000         10
+
+
+
+SQL> select * from emp01;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7369 SMITH                CLERK                    7902 80/12/17
+       800                    20
+
+      7499 ALLEN                SALESMAN                 7698 81/02/20
+      1600        300         30
+
+      7521 WARD                 SALESMAN                 7698 81/02/22
+      1250        500         30
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7566 JONES                MANAGER                  7839 81/04/02
+      2975                    20
+
+      7654 MARTIN               SALESMAN                 7698 81/09/28
+      1250       1400         30
+
+      7698 BLAKE                MANAGER                  7839 81/05/01
+      2850                    30
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7782 CLARK                MANAGER                  7839 81/06/09
+      2450                    10
+
+      7839 KING                 PRESIDENT                     81/11/17
+      5000                    10
+
+      7844 TURNER               SALESMAN                 7698 81/09/08
+      1500          0         30
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      7900 JAMES                CLERK                    7698 81/12/03
+       950                    30
+
+      7902 FORD                 ANALYST                  7566 81/12/03
+      3000                    20
+
+      7934 MILLER               CLERK                    7782 82/01/23
+      1300                    10
+
+
+     EMPNO ENAME                JOB                       MGR HIREDATE
+---------- -------------------- ------------------ ---------- --------
+       SAL       COMM     DEPTNO
+---------- ---------- ----------
+      8000 ANGEL
+      7000                    10
+
+
+13 rows selected.
+
+
+
+
+SQL> desc user_tables;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ TABLESPACE_NAME                                    VARCHAR2(30)
+ CLUSTER_NAME                                       VARCHAR2(30)
+ IOT_NAME                                           VARCHAR2(30)
+ STATUS                                             VARCHAR2(8)
+ PCT_FREE                                           NUMBER
+ PCT_USED                                           NUMBER
+ INI_TRANS                                          NUMBER
+ MAX_TRANS                                          NUMBER
+ INITIAL_EXTENT                                     NUMBER
+ NEXT_EXTENT                                        NUMBER
+ MIN_EXTENTS                                        NUMBER
+ MAX_EXTENTS                                        NUMBER
+ PCT_INCREASE                                       NUMBER
+ FREELISTS                                          NUMBER
+ FREELIST_GROUPS                                    NUMBER
+ LOGGING                                            VARCHAR2(3)
+ BACKED_UP                                          VARCHAR2(1)
+ NUM_ROWS                                           NUMBER
+ BLOCKS                                             NUMBER
+ EMPTY_BLOCKS                                       NUMBER
+ AVG_SPACE                                          NUMBER
+ CHAIN_CNT                                          NUMBER
+ AVG_ROW_LEN                                        NUMBER
+ AVG_SPACE_FREELIST_BLOCKS                          NUMBER
+ NUM_FREELIST_BLOCKS                                NUMBER
+ DEGREE                                             VARCHAR2(40)
+ INSTANCES                                          VARCHAR2(40)
+ CACHE                                              VARCHAR2(20)
+ TABLE_LOCK                                         VARCHAR2(8)
+ SAMPLE_SIZE                                        NUMBER
+ LAST_ANALYZED                                      DATE
+ PARTITIONED                                        VARCHAR2(3)
+ IOT_TYPE                                           VARCHAR2(12)
+ TEMPORARY                                          VARCHAR2(1)
+ SECONDARY                                          VARCHAR2(1)
+ NESTED                                             VARCHAR2(3)
+ BUFFER_POOL                                        VARCHAR2(7)
+ FLASH_CACHE                                        VARCHAR2(7)
+ CELL_FLASH_CACHE                                   VARCHAR2(7)
+ ROW_MOVEMENT                                       VARCHAR2(8)
+ GLOBAL_STATS                                       VARCHAR2(3)
+ USER_STATS                                         VARCHAR2(3)
+ DURATION                                           VARCHAR2(15)
+ SKIP_CORRUPT                                       VARCHAR2(8)
+ MONITORING                                         VARCHAR2(3)
+ CLUSTER_OWNER                                      VARCHAR2(30)
+ DEPENDENCIES                                       VARCHAR2(8)
+ COMPRESSION                                        VARCHAR2(8)
+ COMPRESS_FOR                                       VARCHAR2(12)
+ DROPPED                                            VARCHAR2(3)
+ READ_ONLY                                          VARCHAR2(3)
+ SEGMENT_CREATED                                    VARCHAR2(3)
+ RESULT_CACHE                                       VARCHAR2(7)
+
+
+
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+------------------------------------------------------------
+TEST1
+TEST2
+EMP02
+DEPT
+EMP
+BOARD
+DEPT01
+EMP01
+
+8 rows selected.
+
+
+
+
+SQL> desc user_views;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ VIEW_NAME                                 NOT NULL VARCHAR2(30)
+ TEXT_LENGTH                                        NUMBER
+ TEXT                                               LONG
+ TYPE_TEXT_LENGTH                                   NUMBER
+ TYPE_TEXT                                          VARCHAR2(4000)
+ OID_TEXT_LENGTH                                    NUMBER
+ OID_TEXT                                           VARCHAR2(4000)
+ VIEW_TYPE_OWNER                                    VARCHAR2(30)
+ VIEW_TYPE                                          VARCHAR2(30)
+ SUPERVIEW_NAME                                     VARCHAR2(30)
+ EDITIONING_VIEW                                    VARCHAR2(1)
+ READ_ONLY                                          VARCHAR2(1)
+
+
+
+
+SQL> select view_name, text from user_views;
+
+VIEW_NAME
+------------------------------------------------------------
+TEXT
+--------------------------------------------------------------------------------
+VIEW_EMP10
+select empno, ename, sal, deptno
+from emp01
+where deptno = 10
+
+
+
+
+SQL> select sequence_name from user_sequences;
+
+no rows selected
+
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> show user
+USER is "SYS"
+
+
+SQL> create user orauser01 identified by user01;
+
+User created.
+
+
+SQL> conn orauser01/user01;
+ERROR:
+ORA-01045: user ORAUSER01 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+
+
+SQL> show user
+USER is ""
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> show user
+USER is "SYS"
+
+
+SQL> grant create session, create table to orauser01;
+
+Grant succeeded.
+
+
+SQL> conn orauser01/user01
+Connected.
+
+
+SQL> show user
+USER is "ORAUSER01"
+
+
+SQL> select * from tab;
+
+no rows selected
+
+
+
+SQL> create table test (
+  2  id varchar2(10),
+  3  pass varchar2(10)
+  4  );
+create table test (
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+
+SQL> select * from session_privs;
+
+PRIVILEGE
+--------------------------------------------------------------------------------
+CREATE SESSION
+CREATE TABLE
+
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> show user
+USER is "SYS"
+
+
+SQL> create user orauser02 identified by user02;
+
+User created.
+
+
+
+SQL> conn orauser02/user02
+ERROR:
+ORA-01045: user ORAUSER02 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+
+
+SQL> grant connect, resource to orauser02;
+SP2-0640: Not connected
+
+
+SQL> show user
+USER is ""
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> grant connect, resource to orauser02;
+
+Grant succeeded.
+
+
+SQL> conn orauser02/user02
+Connected.
+
+
+SQL> create table test(
+  2  id varchar2(10),
+  3  pass varchar2(10)
+  4  );
+
+Table created.
+
+
+SQL> select * from session_privs;
+
+PRIVILEGE
+--------------------------------------------------------------------------------
+CREATE SESSION
+UNLIMITED TABLESPACE
+CREATE TABLE
+CREATE CLUSTER
+CREATE SEQUENCE
+CREATE PROCEDURE
+CREATE TRIGGER
+CREATE TYPE
+CREATE OPERATOR
+CREATE INDEXTYPE
+
+10 rows selected.
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> revoke create session from orauser01;
+
+Revoke succeeded.
+
+
+SQL> show user
+USER is ""
+
+
+SQL> conn / as sysdba
+Connected.
+
+
+SQL> show user
+USER is "SYS"
+
+
+SQL> drop user orauser01;
+
+User dropped.
+
+
+SQL> drop user orauser02;
+drop user orauser02
+*
+ERROR at line 1:
+ORA-01922: CASCADE must be specified to drop 'ORAUSER02'
+
+
+SQL> show user
+USER is "SYS"
+
+
+SQL> drop user orauser02 cascade;
+
+User dropped.
+
+
+dbms_output 이 정상 작동하도록 설정을 on
+
+set serveroutput on
+
+
+begin
+dbms_output.put_line('Hello Oracle~');
+end;
+/
+===============
+Hello Oracle~
+
+PL/SQL procedure successfully completed.
+===============
+
+
+DECLARE
+   VEMPNO NUMBER(4);
+   VENAME VARCHAR2(10);
+BEGIN
+   VEMPNO := 7788;
+   VENAME := 'SCOTT';
+   DBMS_OUTPUT.PUT_LINE('사번 / 이름');
+   DBMS_OUTPUT.PUT_LINE('---------------');
+   DBMS_OUTPUT.PUT_LINE(VEMPNO || ' / ' || VENAME);
+END;
+/
+=====================
+사번 / 이름
+---------------
+7788 / SCOTT
+=====================
+
+
+
+DECLARE
+   -- %TYPE 속성으로 칼럼 단위의 데이터를 저장할 수 있는
+   -- 레퍼런스 변수 선언
+   VEMPNO EMP.EMPNO%TYPE;
+   VENAME EMP.ENAME%TYPE;
+BEGIN
+   SELECT DISTINCT EMPNO, ENAME INTO VEMPNO, VENAME FROM EMP
+   WHERE ENAME = 'SMITH';
+
+   DBMS_OUTPUT.PUT_LINE('사번 / 이름');
+   DBMS_OUTPUT.PUT_LINE('---------------');
+   DBMS_OUTPUT.PUT_LINE(VEMPNO || ' / ' || VENAME);
+END;
+/
+=================
+사번 / 이름
+---------------
+7369 / SMITH
+=================
+
+
+
+DECLARE
+   VEMP EMP%ROWTYPE;
+   ANNSAL NUMBER(7, 2);
+BEGIN
+   SELECT DISTINCT * INTO VEMP FROM EMP
+   WHERE ENAME='SMITH';
+
+   IF (VEMP.COMM IS NULL) THEN
+     VEMP.COMM := 0;
+   END IF;
+   ANNSAL := VEMP.SAL * 12 + VEMP.COMM;
+   DBMS_OUTPUT.PUT_LINE('사번 / 이름 / 연봉');
+   DBMS_OUTPUT.PUT_LINE('-------------------------');
+   DBMS_OUTPUT.PUT_LINE(VEMP.EMPNO || ' / ' || 
+     VEMP.ENAME || ' / ' || ANNSAL);
+END;
+/
+==========================
+사번 / 이름 / 연봉
+-------------------------
+7369 / SMITH / 9600
+==========================
+
+
+
+DECLARE
+   VEMP EMP%ROWTYPE;
+   ANNSAL NUMBER(7, 2);
+BEGIN
+   SELECT DISTINCT * INTO VEMP FROM EMP
+   WHERE ENAME='SMITH';
+
+   IF (VEMP.COMM IS NULL) THEN
+     ANNSAL := VEMP.SAL * 12;
+   ELSE
+     ANNSAL := VEMP.SAL * 12 + VEMP.COMM;
+   END IF;
+
+
+   DBMS_OUTPUT.PUT_LINE('사번 / 이름 / 연봉');
+   DBMS_OUTPUT.PUT_LINE('-------------------------');
+   DBMS_OUTPUT.PUT_LINE(VEMP.EMPNO || ' / ' || 
+     VEMP.ENAME || ' / ' || ANNSAL);
+END;
+/
+========================
+사번 / 이름 / 연봉
+-------------------------
+7369 / SMITH / 9600
+========================
+
+
+
+DECLARE
+   VEMP EMP%ROWTYPE;
+   VDNAME VARCHAR2(14);
+BEGIN
+   SELECT DISTINCT * INTO VEMP FROM EMP
+   WHERE ENAME='SMITH';
+
+   IF (VEMP.DEPTNO = 10) THEN
+     VDNAME := 'ACCOUNTING';
+   ELSIF (VEMP.DEPTNO = 20) THEN     
+     VDNAME := 'RESEARCH';
+   ELSIF (VEMP.DEPTNO = 30) THEN     
+     VDNAME := 'SALES';
+   ELSIF (VEMP.DEPTNO = 40) THEN     
+     VDNAME := 'OPERATIONS';
+   END IF;
+
+
+   DBMS_OUTPUT.PUT_LINE('사번 / 이름 / 부서명');
+   DBMS_OUTPUT.PUT_LINE('-------------------------');
+   DBMS_OUTPUT.PUT_LINE(VEMP.EMPNO || ' / ' || 
+     VEMP.ENAME || ' / ' || VDNAME);
+END;
+/
+=======================
+사번 / 이름 / 부서명
+-------------------------
+7369 / SMITH / RESEARCH
+=======================
+
+
+
+DECLARE
+   V_EMPNO NUMBER(4) := 8888;
+   V_DEPTNO NUMBER(2);
+   V_ENAME VARCHAR2(10) := 'XMAN';	   
+   V_JOB VARCHAR2(9);
+   V_SAL NUMBER(7, 2);
+BEGIN
+   V_DEPTNO := 20;
+   IF V_JOB IS NULL THEN
+      V_JOB := '신입';
+   END IF;
+   IF V_JOB = '신입' THEN
+      V_SAL := 2000;
+   ELSIF V_JOB IN ('MANAGER', 'ANALYST') THEN
+      V_SAL := 3500;
+   ELSE
+      V_SAL := 2500;  
+   END IF;
+   INSERT INTO EMP(DEPTNO, EMPNO, ENAME, SAL, JOB)
+       VALUES(V_DEPTNO, V_EMPNO, V_ENAME, V_SAL, V_JOB);
+   COMMIT;
+END;
+/
+
+
+
+
+DECLARE
+   N  NUMBER := 1;
+BEGIN
+   LOOP
+     DBMS_OUTPUT.PUT_LINE(N);
+     N := N + 1;
+     IF N > 5 THEN
+        EXIT;
+     END IF;
+   END LOOP;
+END;
+/
+=========
+1
+2
+3
+4
+5
+=========
+
+
+
+
+DECLARE
+ K INT := 1;
+BEGIN
+   LOOP
+     DBMS_OUTPUT.PUT_LINE(K);
+     K := K + 1;
+     EXIT WHEN (K > 10);
+   END LOOP;
+END;
+/
+=========
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+=========
+
+
+
+DECLARE
+   cnt NUMBER := 1;
+   star VARCHAR2(10) := NULL;
+BEGIN
+   LOOP
+       star := star || '*';
+       cnt := cnt + 1;     
+       DBMS_OUTPUT.PUT_LINE(star);
+       IF cnt > 5 THEN
+          EXIT; 
+       END IF;  
+   END LOOP;
+END;
+/
+==========
+*
+**
+***
+****
+*****
+==========
+
+
+
+DECLARE
+BEGIN
+   FOR N IN 1 .. 5 LOOP
+       DBMS_OUTPUT.PUT_LINE(N);
+   END LOOP;
+END;
+/
+======
+1
+2
+3
+4
+5
+======
+
+
+
+
+DECLARE
+   cnt NUMBER := 1;
+   star VARCHAR2(10) := NULL;
+BEGIN
+   FOR n IN 1..10 LOOP
+       star := star || '*';   
+       DBMS_OUTPUT.PUT_LINE(star);
+   END LOOP;
+END;
+/
+============
+*
+**
+***
+****
+*****
+******
+*******
+********
+*********
+**********
+============
+
+
+
+DECLARE
+   tot NUMBER := 0;
+BEGIN
+   FOR n IN 1 .. 10 LOOP
+       tot := tot + n;
+   END LOOP;
+
+   DBMS_OUTPUT.PUT_LINE(tot);
+END;
+/
+====
+55
+====
+
+
+
+
+DECLARE
+   VDEPT DEPT%ROWTYPE;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('부서번호 / 부서명 / 지역명');
+   DBMS_OUTPUT.PUT_LINE('-------------');
+   FOR CNT IN 1..4 LOOP
+     SELECT DISTINCT * INTO VDEPT FROM DEPT
+     WHERE DEPTNO = 10 * CNT;
+   
+     DBMS_OUTPUT.PUT_LINE(VDEPT.DEPTNO || ' / ' || 
+     VDEPT.DNAME || ' / ' || VDEPT.LOC);
+   END LOOP;
+END;
+/
+=============================
+부서번호 / 부서명 / 지역명
+-------------
+10 / ACCOUNTING / NEW YORK
+20 / RESEARCH / DALLAS
+30 / SALES / CHICAGO
+40 / OPERATIONS / BOSTON
+=============================
+
+
+
+
+
+DECLARE
+   N NUMBER := 1;
+BEGIN
+   WHILE N <= 5 LOOP 
+       DBMS_OUTPUT.PUT_LINE(N);
+       N := N + 1; 
+   END LOOP;
+END;
+/
+====
+1
+2
+3
+4
+5
+====
+
+
+
+DECLARE
+   N NUMBER := 1;
+   tot NUMBER := 0;
+BEGIN
+   WHILE N <= 10 LOOP 
+       tot := tot + n;
+       n := n + 1;   
+   END LOOP;
+   DBMS_OUTPUT.PUT_LINE(tot);
+END;
+/
+====
+55
+====
+
+
+
+DECLARE
+   VDEPT DEPT%ROWTYPE;
+   CURSOR C2 IS SELECT * FROM DEPT;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('부서번호 / 부서명 / 지역명');
+   DBMS_OUTPUT.PUT_LINE('------------------------');
+   OPEN C2;
+   LOOP
+       FETCH  C2  INTO VDEPT.DEPTNO, VDEPT.DNAME, VDEPT.LOC;
+       EXIT WHEN C2%NOTFOUND;
+       DBMS_OUTPUT.PUT_LINE(VDEPT.DEPTNO || ' / ' || 
+       VDEPT.DNAME || ' / ' || VDEPT.LOC);
+   END LOOP;
+   DBMS_OUTPUT.PUT_LINE('행수 => ' || C2%ROWCOUNT);
+   CLOSE C2;
+END;
+/
+==============================
+부서번호 / 부서명 / 지역명
+------------------------
+10 / ACCOUNTING / NEW YORK
+20 / RESEARCH / DALLAS
+30 / SALES / CHICAGO
+40 / OPERATIONS / BOSTON
+행수 => 4
+==============================
+
+
+
+DECLARE
+   VDEPT DEPT%ROWTYPE;
+   CURSOR C2 IS SELECT * FROM DEPT;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('부서번호 / 부서명 / 지역명');
+   DBMS_OUTPUT.PUT_LINE('------------------------');
+   FOR VDEPT IN C2 LOOP
+       EXIT WHEN C2%NOTFOUND;
+       DBMS_OUTPUT.PUT_LINE(VDEPT.DEPTNO || ' / ' || 
+       VDEPT.DNAME || ' / ' || VDEPT.LOC);
+   END LOOP;
+END;
+/
+======================
+부서번호 / 부서명 / 지역명
+------------------------
+10 / ACCOUNTING / NEW YORK
+20 / RESEARCH / DALLAS
+30 / SALES / CHICAGO
+40 / OPERATIONS / BOSTON
+======================
+
+
+CREATE PROCEDURE test IS
+BEGIN
+     DBMS_OUTPUT.PUT_LINE('Hello 프로시저~');
+END;
+/
+EXEC test;
+=========
+Hello 프로시저~
+=========
+
+
+CREATE OR REPLACE PROCEDURE res
+	( sname IN VARCHAR2 )
+IS
+BEGIN
+     DBMS_OUTPUT.PUT_LINE(sname || '님 합격!!!');
+END;
+/
+exec res('지화자');
+===========
+지화자님 합격!!!
+===========
+
+exec res; -- 오류
+
+
+
+
+
+
