@@ -1,0 +1,71 @@
+select e.empno, e.ename, e.job, d.deptno, d.dname, d.loc
+  2  from emp e, dept d
+
+
+ select e.empno, e.ename, e.job, e.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno(+) = d.deptno;
+
+
+select e.empno, e.ename, e.sal, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.job = 'SALESMAN' and e.deptno = d.deptno;
+
+
+select e.empno, e.ename, e.job, e.sal, s.grade, s.losal, s.hisal
+  2  from emp e, salgrade s
+  3  where e.sal between s.losal and s.hisal;
+
+
+select e.empno, e.ename, e.mgr "MGR_NO", m.ename "MGR_NAME"
+  2  from emp e, emp m
+  3  where e.mgr = m.empno(+);
+
+
+ select e.ename, e.empno, e.mgr" MGR_NO ", m.ename" MGR_NAME "
+  2  from emp e, emp m
+  3  where e.mgr = m.empno and e.mgr = 7698;
+
+
+ select e.ename, e.job, e.sal, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and d.loc = 'NEW YORK';
+
+
+select e.ename, e.job, e.sal, e.comm, d.dname
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and e.comm is not null;
+
+
+select e.ename, e.job, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and e.ename like '%L%';
+
+
+select e.empno, e.ename, e.job, e.deptno, d.dname, d.loc, e.sal, s.grade
+  2  from emp e, dept d, salgrade s
+  3  where e.deptno = d.deptno and e.sal between s.losal and s.hisal;
+
+
+select e.empno, e.ename, e.deptno, d.dname, d.loc
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno and d.dname = 'SALES';
+
+
+select e.empno, e.ename, e.sal, e.job, d.dname, s.grade
+  2  from emp e, dept d, salgrade s
+  3  where e.deptno = d.deptno and e.sal between s.losal and s.hisal
+  4  and (e.job = 'MANAGER' or e.job = 'CLERK');
+
+
+select e.empno, e.ename, e.sal, e.mgr "MGR_NO", m.ename "MGR_NAME", m.job "MGR_JOB"
+  2  from emp e, emp m
+  3  where e.mgr = m.empno(+);
+
+
+select e.ename, e.hiredate, m.ename "MGR_NAME", m.hiredate "MGR_HIREDATE"
+  2  from emp e, emp m
+  3  where e.mgr = m.empno(+) and e.hiredate <= m.hiredate;
+
+
+
